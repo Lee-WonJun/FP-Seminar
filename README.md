@@ -1,1 +1,1 @@
-# Clojure-Tutorial
+# Funtional Programming Seminar
