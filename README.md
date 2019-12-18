@@ -3,7 +3,7 @@ ____
 
 ## Concept
 ____
-### 1. Stream
+### 1. Lambda & Map & Reduce & Filter
 ### 2. Recursive Function
 ### 3. Currying
 ### 4. Memozation
