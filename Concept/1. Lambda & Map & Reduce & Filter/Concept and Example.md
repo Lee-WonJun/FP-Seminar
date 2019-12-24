@@ -48,3 +48,51 @@ Map Reduce Filter는 FP 에서 기초적이면서 가장 자주 사용하는 고
 시퀀스의 값들을 특정 계산법을 통하여 하나의 값으로 리턴
 
 ![ex](./img/img1.jpg)
+
+
+____
+## Example
+#### C++
+```C++
+    std::vector<int> seq = { 1,2,3,4,5 };
+
+    std::vector<int> mapped_seq;
+    std::vector<int> filtered_seq;
+    int reduced_value;
+    std::transform(seq.begin(), seq.end(), mapped_seq.begin(), [](const auto& x) {return x * x; });
+    std::copy_if(mapped_seq.begin(), mapped_seq.end(), filtered_seq.begin(), [](const auto& x) {return x%2 == 0; });
+    reduced_value = std::accumulate(filtered_seq.begin(), filtered_seq.end(), 0 , [](const auto& x, const auto& y) {return x + y; });
+
+```
+#### C#
+```C#
+//System.Linq 추가
+ var value = seq.Select(x => x*x)    //map
+                .Where(x => x%2 == 0)           //filter
+                .Aggregate((x,y) => x+y );      //reduce
+```
+
+#### F#
+```F#
+let seq = [|1;2;3;4;5|]
+let value = seq
+            |> Seq.map (fun x -> x*x)
+            |> Seq.filter (fun x -> x%2 = 0)
+            |> Seq.reduce (fun x y -> x+y)
+```
+#### clojure
+``` clojure
+
+(defn ex [] 
+  (reduce + (
+             filter #(= 0 (mod %1 2))
+              (map #(* %1 %1) seq))))
+
+(defn ex2 []
+  (->> seq
+  (map #(* %1 %1))
+  (filter #(= 0 (mod %1 2)))
+  (reduce +))
+)          ; ->> 매크로 사용해서 순서를 변경
+```
+____
