@@ -44,3 +44,5 @@ Map Reduce Filter는 FP 에서 기초적이면서 가장 자주 사용하는 고
 
 ### Reduce 
 시퀀스의 값들을 특정 계산법을 통하여 하나의 값으로 리턴
+
+![ex](./img/img1.jpg)
