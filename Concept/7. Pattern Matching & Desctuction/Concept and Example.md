@@ -102,7 +102,7 @@ match expression with
 
 // _를 통한 discarding, 튜플 분해, as로 변환, 변수 대입, head::tail 등등.. 수많은 패턴 매칭이 가능하다.
 // 아래는 MS 공식 사이트에서 제공하는 목록이다.
-
+// https://docs.microsoft.com/ko-kr/dotnet/fsharp/language-reference/pattern-matching
 상수 패턴 	  상수 또는 정의 된 리터럴 식별자 	1.0, "test", 30, Color.Red
 식별자 패턴 	 구분 된 공용 구조체, 예외 레이블 활성 패턴 사례의 case 값 	Some(x) Failure(msg)
 변수 패턴 	  identifier 	a
