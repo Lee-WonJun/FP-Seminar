@@ -50,3 +50,30 @@ else
   println("Nothing") //값이 존재하지 않으므로 Nothing 출력
 ```
 
+# Either class
+Option 클래스에서는 null 여부를 체크할 수 있지만, null일 때 어떤 값을 주입시켜주거나 할 수 없습니다. 하지만 Either에서는 Option과 달리(Null과 다른 값) 하나의 값과 Null일때의 다른 값 2가지 다른 자료형을 갖을 수 있는 값을 다루어 이를 처리할 수 있습니다.
+
+### 장점
+- null checking시 null일 때 대신 처리할 값을 처리할 수 있음
+- 에러 상황에서 에러와 에러가 나지 않는 상황에서 얻을 수 있는 값을 한번에 처리할 수 있음
+
+____
+## Example
+#### JAVA
+```Java
+//Either 클래스와 같은 개념이 존재하지 않습니다.
+```
+#### KOTLIN
+```Kotlin
+//Either 클래스와 같은 개념이 존재하지 않습니다.
+```
+
+#### SCALA
+```Scala
+val either: Either[NumberFormatException, Int] = try {
+  Right("x".toInt)
+} catch {
+  case nfe: NumberFormatException => Left(nfe) //에러 상황을 LEFT에 올바른 값을 RIGHT에 담아서 한번에 처리할 수 있다.
+}
+```
+
