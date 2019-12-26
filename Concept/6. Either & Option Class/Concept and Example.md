@@ -12,6 +12,7 @@ ____
 Map<String, Integer> alphaNumMap = new HashMap<>();
 alphaNumMap.put("A", 1);
 alphaNumMap.put("B", 1);
+
 Optional<Integer> aValue = Optional.ofNullable(alphaNumMap.get("A"));
 Optional<Integer> cValue = Optional.ofNullable(alphaNumMap.get("C"));
 
@@ -25,6 +26,7 @@ else
 #### KOTLIN
 ```Kotlin
 val alphaNumMap = mapOf("A" to 1, "B" to 2)
+
 val aValue: Int? = alphaNumMap.get("A") //코틀린에는 Option 클래스 대신 null checking을 해주는 ? 문법이 있다.
 val cValue: Int? = alphaNumMap.get("C")
 
@@ -36,6 +38,7 @@ cValue?.let { println(it) } ?: println("Nothing") // let 구문을 활용하여 
 #### SCALA
 ```Scala
 val alphaNumMap = Map("A"-> 1, "B"-> 2)
+
 val aValue: Option[Int] = alphaNumMap.get("A") //값이 있다면 Option의 하위 함수인 Some[T]가 값을 받고
 val cValue: Option[Int] = alphaNumMap.get("C") //값이 없다면 Option의 하위 함수인 None이 생성된다.
 
