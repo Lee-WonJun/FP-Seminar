@@ -39,7 +39,7 @@ fun main() {
 
 ---
 ## Example
-#### SCALA
+#### KOTLIN
 ```Kotlin
 //내부적으로 memoize를 지원하지 않아 확장함수로써 구현하여 사용할 수 있습니다.
 fun isFactor(number: Int, possibleNum: Int) = number % possibleNum == 0
