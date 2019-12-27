@@ -39,6 +39,7 @@ fun main() {
 
 ---
 ## Example
+언어적 차원에서 지원해지는 않는 경우가 많다. 그런 경우 직접 고차함수를 구현해서 사용한다.
 #### KOTLIN
 ```Kotlin
 //내부적으로 memoize를 지원하지 않아 확장함수로써 구현하여 사용할 수 있습니다.
@@ -69,3 +70,25 @@ val memoizedGetFactors: Int => List[Int] = Memo.immutableHashMapMemo {
 }
 ```
 
+####  F#
+```F#
+//언어적 차원에서 지원하지 않는다. 
+//고차함수 메모이제이션 함수를 만들어 사용한다.
+let memoize f =
+    let dict = new System.Collections.Generic.Dictionary<_,_>()
+    fun n ->
+        match dict.TryGetValue(n) with
+        | (true, v) -> v
+        | _ ->
+            let temp = f(n)
+            dict.Add(n, temp)
+            temp
+//싱글쓰레드용이므로 멀티쓰레드환경에서는 따로 작성해주어야한다.
+```
+
+#### clojure
+```clojure
+;(memoize f) 함수를 제공한다.
+(defn fun [x] (* x x))
+(defn memo-fun (memoize fun))
+```
