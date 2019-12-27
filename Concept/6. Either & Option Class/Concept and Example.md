@@ -1,5 +1,5 @@
 # Option class
-값이 null이냐 아니냐(있냐 없냐) 여부를 체크하기 위한 타입으로, null checking을 안전하게 할 수 있습니다.
+값이 있는지 없는지 여부를 체크하기 위한 타입으로, null이나 error Checking을 안전하게 할 수 있습니다.
 
 ### 장점
 - null checking을 코드단에서 명시적으로 하여, 좀 더 안정적으로 체크할 수 있습니다.
