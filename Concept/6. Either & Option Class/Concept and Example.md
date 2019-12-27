@@ -50,6 +50,19 @@ else
   println("Nothing") //값이 존재하지 않으므로 Nothing 출력
 ```
 
+```F#
+//option 이 존재한다.
+//Option 에는 Some 과 None 이 있다.
+let x = Some 10
+let result = match x with 
+| Some i -> Some(i * i)
+| None -> None
+
+```
+
+```clojure
+;;동적 타이핑 언어라는점과 OOP 가 아니라 사용하지 않는다.
+```
 # Either class
 Option 클래스에서는 null 여부를 체크할 수 있지만, null일 때 어떤 값을 주입시켜주거나 할 수 없습니다. 하지만 Either에서는 Option과 달리(Null과 다른 값) 하나의 값과 Null일때의 다른 값 2가지 다른 자료형을 갖을 수 있는 값을 다루어 이를 처리할 수 있습니다.
 
