@@ -50,6 +50,7 @@ else
   println("Nothing") //값이 존재하지 않으므로 Nothing 출력
 ```
 
+#### F#
 ```F#
 //option 이 존재한다.
 //Option 에는 Some 과 None 이 있다.
@@ -60,6 +61,7 @@ let result = match x with
 
 ```
 
+#### clojure
 ```clojure
 ;;동적 타이핑 언어라는점과 OOP 가 아니라 사용하지 않는다.
 ```
