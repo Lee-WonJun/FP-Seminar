@@ -32,6 +32,16 @@ fun recursiveFactorial(val n: Int): Int {
         return n * recursiveFactorial(n - 1)
 ```
 
+
+#### F#
+```f#
+//F# 에서 재귀함수를 위하여 rec 키워드 붙여 선언한다 사용한다.
+let rec fib n =
+   if n <= 2 then 1
+   else fib (n - 1) + fib (n - 2)
+```
+
+
 반복문을 사용한 구현의 경우 for문 안의 변수를 증가시키며 해당 변수를 사용하여 값을 계산해 나가는 것과 달리 재귀 함수의 경우 파라미터로 들어오는 숫자(불변)와 재귀 함수를 사용하여 값을 계산해 나갑니다.
 
 ---
@@ -87,4 +97,17 @@ def factorial(n: Int, prvNum: Int = 1): Int = {
   else
       factorial(n-1, n * prvNum)
 }
+```
+
+#### clojure
+```clojure
+;호출할때 recur 로  호출한다
+(defn fac
+  ([n] (fac n 1))
+  ([n acc]
+   (if (< n 2)
+     acc
+     (recur (dec n) (*' n acc)) )))
+; 호출하는 부분에서 recur 로 호출하엿다.
+; *'은 * 연산이지만 BigInt 에 대응된다.
 ```
