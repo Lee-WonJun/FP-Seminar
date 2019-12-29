@@ -1,98 +1,90 @@
-# lambda
-이름없는 함수, 무명함수, 익명함수 등으로 변역되며 람다대수에 기초함.  
-FP 에서는 함수를 1급 시민으로 취급하여 파라미터로 넘기거나 함수자체를 반환 할 수 있다.  
-이때 파라미터로 넘길 함수를 따로 만들지 않고 그순간에만 사용하거나 간단한 식인경우 함수 본체만 넘기면 편한다.  
+# Recursive Function 
+재귀 함수는 함수를 구현할 때 자기 자신을 반복적으로 호출하여 반복문과 같이 표현하는 함수를 말합니다. 반복문의 경우 더 많은 변수와 이것들로 인해 발생하는 상태를 관리해야 함으로 함수형 프로그래밍 패러다임과는 다소 맞지 않으며, 변수가 줄어들고 좀 더 직관적인 코드를 작성할 수 있기 때문에 때문에 가독성이 좋아집니다. 함수형 프로그래밍에서는 이러한 반복문과 같은 형태의 코드를 작성하기 위하여 일급 함수를 재귀적으로 호출하여 사용합니다.  
+
+하지만, 함수를 호출하면 함수의 주소값은 스택에 쌓이게 되며 재귀 함수의 경우 반복적으로 스택에 메모리가 쌓이기 때문에 반복문에 비해 많은 메모리가 필요하며, 최악의 경우 스택 오버플로우가 나는 상황까지 생길 수 있습니다. 또한 스택 프레임을 구성하는 오버헤드가 더해져 반복문에 비해 성능도 좋지 않습니다.  
+
+아래의 예제에서는 팩토리얼을 각각 반복문과 재귀 함수로 구현하고 비교해보도록 하겠습니다.
 
 ### 장점
-코드가 간결해진다.
-
+- 가독성이 좋아집니다.
+- 변수와 상태가 줄어듭니다.
 
 ### 단점
-디버깅할때 불편함.  
-복잡한 로직을 람다로 만드는경우 오히려 복잡해 보일수 있다.
-____
+- 메모리가 많이 듭니다.
+- 성능이 반복문에 비해 좋지 않습니다.
+
+---
 ## Example
-#### C++
-```C++
-기본 구조 : [](){}  // [캡쳐](파라미터){본문}
-리턴값 명시 : []()->bool{}  
+#### KOTLIN
+```kotlin
+//반복문
+fun factorial(val n: Int): Int {
+    var res: Int = 1
+    for(num in (1..n)) 
+        res = res * num
+    return res
+}
+
+fun recursiveFactorial(val n: Int): Int {
+    if(n == 1)
+        return n
+    else 
+        return n * recursiveFactorial(n - 1)
 ```
-#### C#
-```C#
-() => {}  //(int x) => {return x*x;}
- => {}    // x -> {return x*x;}  (타입추론이 되는경우 타입 생략 가능)
- =>       // x => x*x
-```
 
-#### F#
-```F#
-(fun -> ) // (fun x -> x*x)
-```
-#### clojure
-``` clojure
-1. (fn [] ) 사용 // (fun [x] (* x x))
-2. #() 사용 // #(* %1 %1)
-```
-____
-# Map Reduce Filter
-함수를 파라미터로 받아서 실행하거나 함수를 리턴해주는 함수를 고차함수라고 한다.  
-Map Reduce Filter는 FP 에서 기초적이면서 가장 자주 사용하는 고차함수들이다.   
+반복문을 사용한 구현의 경우 for문 안의 변수를 증가시키며 해당 변수를 사용하여 값을 계산해 나가는 것과 달리 재귀 함수의 경우 파라미터로 들어오는 숫자(불변)와 재귀 함수를 사용하여 값을 계산해 나갑니다.
 
-### Map
-시퀀스의 각 요소를 다른 값으로 매핑 시키는 함수
+---
+# Tail Recursion
+위의 예제를 기준으로 재귀의 문제를 설명하도록 하겠습니다.  
+rf(5)의 상황에서 결과 값이 도출되는 함수 호출의 흐름은 아래와 같습니다.(recursiveFactorial함수를 줄여서 rf로 표현하겠습니다.) 
+rf(5)  
+= 5 * rf(4)  
+= 5 * (4 * rf(3))  
+= 5 * (4 * (3 * rf(2)))  
+= 5 * (4 * (3 * (2 * rf(1))))
+= 5 * (4 * (3 * (2 * 1)))
+= 120
 
-### Filter
-시퀀스에서 특정 조건의 요소만 필터링 하는 함수
+위와 같이 총 5번의 함수가 호출되며 호출에 따라 스택 프레임이 구성되고 메모리를 잡아 먹게 됩니다. 또한 결과 도출을 위한 표현식이 추가적으로 붙게 됩니다(5, 5 * 4, 5 * 4 * 3...)  
+꼬리 재귀는 이러한 문제를 해결하기 위해 논리적으로 마지막 호출 시점에 표현식을 포함하지 않는 재귀 함수 자체만을 반환하여, 컴파일러가 이를 반복문과 같이 최적화하여 함수 호출시 쌓이게 되는 스택 리소스를 아끼게됩니다.  
+최종적으로 꼬리 재귀로 구현시 팩토리얼의 결과 도출 까지의 함수 호출의 흐름은 아래와 같게 됩니다.
+tailrf(5, 1)
+= tailrf(4, 5)
+= tailrf(3, 20)
+= tailrf(2, 60)
+= tailrf(1, 120)
+= 120
 
-### Reduce 
-시퀀스의 값들을 특정 계산법을 통하여 하나의 값으로 리턴
+이와 같이 기존 재귀의 표현식을 불변 값으로써 파라미터에 추가로 넘겨주어 추가적인 표현식 없이 매번 같은 형식의 재귀 함수로써의 반환을 가능하게 합니다.
 
-![ex](./img/img1.jpg)
+### 장점
+- 재귀 함수의 단점을 없애줍니다.
 
+### 단점
+- 개발자가 꼬리 재귀로 함수를 바꾸어 작성해야 합니다.
+- 컴파일러단에서의 지원이 필요합니다.
 
-____
+---
 ## Example
-#### C++
-```C++
-    std::vector<int> seq = { 1,2,3,4,5 };
-
-    std::vector<int> mapped_seq;
-    std::vector<int> filtered_seq;
-    int reduced_value;
-    std::transform(seq.begin(), seq.end(), mapped_seq.begin(), [](const auto& x) {return x * x; });
-    std::copy_if(mapped_seq.begin(), mapped_seq.end(), filtered_seq.begin(), [](const auto& x) {return x%2 == 0; });
-    reduced_value = std::accumulate(filtered_seq.begin(), filtered_seq.end(), 0 , [](const auto& x, const auto& y) {return x + y; });
-
-```
-#### C#
-```C#
-//System.Linq 추가
- var value = seq.Select(x => x*x)    //map
-                .Where(x => x%2 == 0)           //filter
-                .Aggregate((x,y) => x+y );      //reduce
+#### KOTLIN
+```kotlin
+//trailrec 키워드를 이용하여 꼬리재귀를 지원합니다.
+tailrec fun factorial(val n: Int, val prvNum: Int): Int {
+    if(n == 1)
+        return prvNum
+    else 
+        return factorial(n - 1, n * prvNum)
 ```
 
-#### F#
-```F#
-let seq = [|1;2;3;4;5|]
-let value = seq
-            |> Seq.map (fun x -> x*x)
-            |> Seq.filter (fun x -> x%2 = 0)
-            |> Seq.reduce (fun x y -> x+y)
+#### SCALA
+```scala
+//tailrec annotation을이용하여 꼬리재귀를 지원합니다.    
+@tailrec
+def factorial(n: Int, prvNum: Int = 1): Int = {
+  if(n == 1)
+      prvNum
+  else
+      factorial(n-1, n * prvNum)
+}
 ```
-#### clojure
-``` clojure
-
-(defn ex [] 
-  (reduce + (
-             filter #(= 0 (mod %1 2))
-              (map #(* %1 %1) seq))))
-
-(defn ex2 []
-  (->> seq
-  (map #(* %1 %1))
-  (filter #(= 0 (mod %1 2)))
-  (reduce +))
-)          ; ->> 매크로 사용해서 순서를 변경
-```
-____
