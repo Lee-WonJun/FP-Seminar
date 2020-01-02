@@ -89,6 +89,17 @@ let memoize f =
 #### clojure
 ```clojure
 ;(memoize f) 함수를 제공한다.
-(defn fun [x] (* x x))
-(defn memo-fun (memoize fun))
+(defn myfunc[a] (println "doing some work") (+ a 10))
+(def myfunc-memo (memoize myfunc))
+
+user=> (myfunc-memo 1)
+doing some work
+11
+user=> (myfunc-memo 1)
+11
+user=> (myfunc-memo 20)
+doing some work
+30
+user=> (myfunc-memo 20)
+30
 ```
