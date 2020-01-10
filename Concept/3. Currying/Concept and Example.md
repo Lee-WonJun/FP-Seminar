@@ -80,3 +80,23 @@ let main argv =
 (defn partial-fun [x]
   ((partial isItemInList seq) x))
 ```
+
+#### kotlin
+``` kotlin
+    val listA: List<Int> = listOf(1, 2, 3, 4, 5)
+    val IsItemInList: (Int, List<Int>) -> Boolean = { x: Int, list: List<Int> -> list.contains(x) }
+    val IsItemInListA: (Int) -> Boolean = { x: Int -> IsItemInList(x, listA) }
+
+    println(IsItemInListA(1)) // true
+    println(IsItemInListA(10)) // false
+```
+
+#### scala
+``` scala
+    val listA = List(1, 2, 3, 4, 5)
+    val IsItemInList = (x: Int, list: List[Int]) => list.exists(element => element == x)
+    val IsItemInListA = (x: Int) => IsItemInList(x, listA)
+
+    println(IsItemInListA(1)) // true
+    println(IsItemInListA(10)) // false
+```
