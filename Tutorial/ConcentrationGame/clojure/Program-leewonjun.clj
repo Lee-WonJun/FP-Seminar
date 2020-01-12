@@ -26,10 +26,9 @@
                                       (:number)))
 
 (defn open-card-in-deck [concentration deck]
-  (vec (map #(if (= concentration %) 
+  (mapv #(if (= concentration %)
            (assoc % :is-open true)
-           %) deck) )
-  )
+           %) deck))
 
 (defn routine [game-deck]
 
