@@ -21,18 +21,48 @@
         ]
     (pprint printed-info)))
 
+(defn get-number  [concentration] (-> concentration
+                                      (:card)
+                                      (:number)))
+
+(defn open-card-in-deck [concentration deck]
+  (vec (map #(if (= concentration %) 
+           (assoc % :is-open true)
+           %) deck) )
+  )
+
 (defn routine [game-deck]
+
   (let [x (read-line)
-        first (get game-deck (read-string x))]
-    (pprint first)
-    (let [x (read-line)
-          second (get game-deck (read-string x))]
-      (pprint second)
+        first  (get game-deck (read-string x))
+        first-number (get-number first)
+        _ (pprint first)
+        y (read-line)
+        second (get game-deck (read-string y))
+        second-number (get-number second)
+        _ (pprint second)]
+    (if (= first-number second-number) 
+      (->> game-deck
+           (open-card-in-deck first)
+           (open-card-in-deck second)       
+           )
       
+      game-deck)
       ; 카드 번호 같은지 확인.
-      )))
+    ))
+
+(defn clear? [game-deck]
+  (every? #(:is-open %) game-deck))
+
+(defn loop-game [game-deck]
+  (print-deck game-deck)
+  
+  (if (clear? game-deck)
+    (println "clear")
+    (recur (routine game-deck))))
+
 
 (defn -main
   "I don't do a whole lot ... yet."
   [& args]
-  (println "Hello, World!"))
+  (loop-game GameDeck))
