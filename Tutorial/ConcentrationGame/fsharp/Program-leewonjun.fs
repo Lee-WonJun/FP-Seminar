@@ -11,7 +11,7 @@ type Card = {suit:Suit; number:int}
 
 type Concentration = Card * bool * int
 
-let Deck = seq { for (s, x) in (Seq.mapi (fun i v -> (v,i) ) [Spade;Dia;Heart;Club] )  do 
+let Deck = seq { for s in [Spade;Dia;Heart;Club]  do 
                     for y in 1..12 ->  ({suit=s;number=y},true) }
 let Shuffled  = Seq.sortBy (fun x -> Random.Next()) Deck 
 
